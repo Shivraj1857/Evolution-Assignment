@@ -10,11 +10,13 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
+import dagger.hilt.android.AndroidEntryPoint
 import io.mastercoding.androidevalutionassignment2.data.repository.AuthRepositoryImpl
 import io.mastercoding.androidevalutionassignment2.databinding.ActivityLoginBinding
 import io.mastercoding.androidevalutionassignment2.ui.dashboard.DashboardActivity
 import io.mastercoding.androidevalutionassignment2.ui.signup.SignupActivity
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
@@ -32,6 +34,7 @@ class LoginActivity : AppCompatActivity() {
         observeViewModel()
         setupClicks()
     }
+
 
     // Input listeners → ViewModel
     private fun setupInputListeners() {
@@ -58,29 +61,18 @@ class LoginActivity : AppCompatActivity() {
 
     // LiveData observers
     private fun observeViewModel() {
+        viewModel.passwordError.observe(this) { error ->
+            binding.tilPassword.error = error
+        }
+
+        viewModel.emailError.observe(this) { error ->
+            binding.tilEmail.error = error
+        }
 
         // Enable / disable login button
         viewModel.isFormValid.observe(this) { isValid ->
             binding.btnLogin.isEnabled = isValid
         }
-
-        // Password validation UI
-        viewModel.isPasswordValid.observe(this) { isValid ->
-            if (isValid) {
-                clearPasswordError()
-            } else {
-
-                showPasswordError()
-            }
-        }
-
-        // Login success → Dashboard
-//        viewModel.loginSuccess.observe(this) { success ->
-//            if (success) {
-//                startActivity(Intent(this, DashboardActivity::class.java))
-//                finish()
-//            }
-//        }
 
         viewModel.loginSuccess.observe(this) { success ->
             if (success) {
@@ -93,28 +85,6 @@ class LoginActivity : AppCompatActivity() {
                 finish()
             }
         }
-
-
-        // Error message (Firebase failure)
-        viewModel.errorMessage.observe(this) { error ->
-            error?.let {
-                binding.tilPassword.error = it
-            }
-        }
-    }
-
-    //UI helpers
-    private fun showPasswordError() {
-        binding.tilPassword.error =
-            "Password must match: >8 chars, 1 Upper, 1 Lower, 1 Number, 1 Special!"
-        binding.tvPasswordError.visibility = View.VISIBLE
-        setStrokeColor(binding.tilPassword, Color.RED)
-    }
-
-    private fun clearPasswordError() {
-        binding.tilPassword.error = null
-        binding.tvPasswordError.visibility = View.GONE
-        setStrokeColor(binding.tilPassword, Color.GRAY)
     }
 
     private fun setStrokeColor(

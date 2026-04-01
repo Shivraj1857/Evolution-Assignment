@@ -11,19 +11,19 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import io.mastercoding.androidevalutionassignment2.data.repository.AuthRepositoryImpl
 import io.mastercoding.androidevalutionassignment2.databinding.ActivitySignupBinding
 import io.mastercoding.androidevalutionassignment2.ui.login.LoginActivity
 
 
+@AndroidEntryPoint
 class SignupActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignupBinding
 
     private val viewModel: SignupViewModel by viewModels {
         SignupViewModelFactory(AuthRepositoryImpl())
-
-
     }
 
 
@@ -102,21 +102,21 @@ class SignupActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
 
+        viewModel.emailError.observe(this) { error ->
+            binding.tilEmail.error = error
+        }
+
+        viewModel.passwordError.observe(this) { error ->
+            binding.tilPassword.error = error
+        }
+
         viewModel.isFormValid.observe(this) {
             binding.btnSave.isEnabled = it
         }
 
-        viewModel.isPasswordValid.observe(this) { valid ->
-            binding.tvPasswordError.visibility =
-                if (valid) View.GONE else View.VISIBLE
-        }
 
         viewModel.signupSuccess.observe(this) { success ->
             if (success) showSuccessDialog()
-        }
-
-        viewModel.errorMessage.observe(this) { error ->
-            binding.tilPassword.error = error
         }
     }
 

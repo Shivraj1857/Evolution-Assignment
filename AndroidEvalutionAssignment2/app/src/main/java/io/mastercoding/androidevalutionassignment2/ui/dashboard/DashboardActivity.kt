@@ -4,10 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import io.mastercoding.androidevalutionassignment2.ui.login.LoginActivity
 
-
-class DashboardActivity : ComponentActivity() {
+@AndroidEntryPoint
+class DashboardActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

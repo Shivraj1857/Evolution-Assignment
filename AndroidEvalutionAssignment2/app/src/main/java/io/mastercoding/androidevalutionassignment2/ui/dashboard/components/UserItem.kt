@@ -52,25 +52,29 @@ fun UserItem(
                 )
             }
 
-            IconButton(onClick = onDelete) {
+
+            if (isAdmin) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = "Delete User",
-                        tint = MaterialTheme.colorScheme.error
-                    )
+                    IconButton(onClick = onDelete) {
+                        Icon(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = "Delete",
+                            tint = Color.Red
+                        )
 
-                   // Spacer(modifier = Modifier.height(4.dp))
-
-                    Text(
-                        text = "Delete",
-                        color = MaterialTheme.colorScheme.error,
+                    }
+                    Spacer(modifier = Modifier.height(4.dp))
+                        Text(
+                       text = "Delete",
+                       color = MaterialTheme.colorScheme.error,
                         style = MaterialTheme.typography.labelSmall
                     )
+
                 }
             }
+
         }
     }
 }

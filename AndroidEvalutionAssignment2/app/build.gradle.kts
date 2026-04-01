@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.hilt)
     id("com.google.gms.google-services")
     alias(libs.plugins.kotlin.compose)
+    //id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -19,6 +20,12 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
+        buildConfigField(
+            "String",
+            "BASE_URL",
+            "\"https://jsonplaceholder.typicode.com/\""
+        )
+
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -37,6 +44,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     buildFeatures{
+        buildConfig = true
         dataBinding=true
         compose=true
         viewBinding=true
@@ -75,6 +83,8 @@ dependencies {
     //Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+    //implementation("com.google.dagger:hilt-android:2.50")
+
 
 
 

@@ -42,11 +42,20 @@ fun DashboardScreen(
                     containerColor = Color(0xFF009688)
                 ),
                 title = {
-                    Text(
-                        text = "Welcome, ${currentUser?.username ?: "User"}!",
-                        color = Color.Blue,
-                        fontWeight = FontWeight.Bold
-                    )
+                    if (isAdmin) {
+                        Text(
+                            text = "Welcome, Admin",
+                            color = Color.Blue,
+                            fontWeight = FontWeight.Bold
+                        )
+                    } else {
+
+                        Text(
+                            text = "Welcome, ${currentUser?.username ?: "User"}!",
+                            color = Color.Blue,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
                 },
                 actions = {
                     IconButton(onClick = { menuExpanded = true }) {
@@ -95,9 +104,10 @@ fun DashboardScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
-                    .background(color = Color(0xFFECF6F8),
-                shape = RoundedCornerShape(8.dp)
-            )
+                    .background(
+                        color = Color(0xFFECF6F8),
+                        shape = RoundedCornerShape(8.dp)
+                    )
             )
 
             // User List

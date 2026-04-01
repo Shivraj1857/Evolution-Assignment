@@ -1,5 +1,6 @@
 package io.mastercoding.androidevalutionassignment2.ui.dashboard
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.mastercoding.androidevalutionassignment2.data.local.entity.UserEntity
@@ -36,22 +37,45 @@ class DashboardViewModel(
 
     //Filtered Users (Search applied)
 
-    val users: StateFlow<List<UserEntity>> =
-        combine(usersFromDb, _searchQuery) { users, query ->
-            if (query.isBlank()) {
-                users
-            } else {
-                users.filter {
-                    it.username.contains(query, ignoreCase = true) ||
-                            it.email.contains(query, ignoreCase = true) ||
-                            it.company.contains(query, ignoreCase = true)
-                }
+//    val users: StateFlow<List<UserEntity>> =
+//        combine(usersFromDb, _searchQuery) { users, query ->
+//            if (query.isBlank()) {
+//                users
+//            } else {
+//                users.filter {
+//                    it.username.contains(query, ignoreCase = true) ||
+//                            it.email.contains(query, ignoreCase = true) ||
+//                            it.company.contains(query, ignoreCase = true)
+//                }
+//            }
+//        }.stateIn(
+//            scope = viewModelScope,
+//            started = SharingStarted.WhileSubscribed(5_000),
+//            initialValue = emptyList()
+//        )
+val users: StateFlow<List<UserEntity>> =
+    combine(usersFromDb, _searchQuery) { users, query ->
+
+        // 1. Exclude current user first
+        val filteredUsers = users.filterNot {
+            it.email.equals(loggedInUserEmail, ignoreCase = true)
+        }
+
+        // 2. Apply search (if any)
+        if (query.isBlank()) {
+            filteredUsers
+        } else {
+            filteredUsers.filter {
+                it.username.contains(query, ignoreCase = true) ||
+                        it.email.contains(query, ignoreCase = true) ||
+                        it.company.contains(query, ignoreCase = true)
             }
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = emptyList()
-        )
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = emptyList()
+    )
 
     // Init
 
@@ -63,11 +87,14 @@ class DashboardViewModel(
         viewModelScope.launch {
             userRepository.getAllUsers().collect { users ->
                 val currentUser = users.find {
+                    Log.d("USER", "LoggedIn User = ${loggedInUserEmail}")
+                    Log.d("USER", "User = ${it.email.trim()}")
                     it.email.trim().equals(
                         loggedInUserEmail.trim(),
                         ignoreCase = true
                     )
                 }
+                    Log.d("USER", "Current User = ${currentUser}")
 
 
                 _currentUser.value = currentUser
