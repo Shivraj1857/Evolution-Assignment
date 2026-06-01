@@ -9,10 +9,10 @@ import com.google.firebase.auth.FirebaseAuth
 import io.mastercoding.androidevalutionassignment2.data.local.entity.UserEntity
 import io.mastercoding.androidevalutionassignment2.data.local.entity.UserRole
 import io.mastercoding.androidevalutionassignment2.data.remote.AuthRepository
-import io.mastercoding.androidevalutionassignment2.data.repository.AuthRepositoryImpl
-import io.mastercoding.androidevalutionassignment2.data.repository.CompanyRepositoryImpl
+import io.mastercoding.androidevalutionassignment2.data.repository.CompanyRepository
 import io.mastercoding.androidevalutionassignment2.data.repository.UserRepository
 import io.mastercoding.androidevalutionassignment2.data.repository.UserRepositoryImpl
+import io.mastercoding.androidevalutionassignment2.data.util.Util
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -20,18 +20,15 @@ class SignupViewModel(
     private val authRepository: AuthRepository
 ) : ViewModel() {
 
-    private val authRepositoryy = AuthRepositoryImpl()
+//    private val authRepositoryy = AuthRepositoryImpl()
     private lateinit var userRepository: UserRepository
+
+    private lateinit var companyRepository : CompanyRepository
 
     fun init(context: Context) {
         userRepository = UserRepositoryImpl(context)
     }
 
-
-    companion object {
-        private const val PASSWORD_REGEX =
-            "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-z\\d@\$!%*?&]{9,}$"
-    }
 
     private var isPasswordTouched = false
     private val _passwordError = MutableLiveData<String?>()
@@ -98,8 +95,7 @@ class SignupViewModel(
 
    //validation
    private fun validatePassword(password: String) {
-       val regex =
-           "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-z\\d@\$!%*?&]{8,}$"
+       val regex = Util.regex
 
        if (!isPasswordTouched) {
            _passwordError.value = null
@@ -179,7 +175,7 @@ class SignupViewModel(
             )
         }
     }
-    private val companyRepository = CompanyRepositoryImpl()
+
 
     private val _companies = MutableLiveData<List<String>>()
     val companies: LiveData<List<String>> = _companies

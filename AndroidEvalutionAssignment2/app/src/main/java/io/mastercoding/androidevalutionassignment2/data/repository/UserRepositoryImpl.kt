@@ -34,3 +34,4 @@ class UserRepositoryImpl(context: Context) : UserRepository {
         userDao.clearUsers()
     }
 }
+

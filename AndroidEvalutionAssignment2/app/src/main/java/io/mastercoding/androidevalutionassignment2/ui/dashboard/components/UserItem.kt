@@ -65,7 +65,7 @@ fun UserItem(
                         )
 
                     }
-                    Spacer(modifier = Modifier.height(4.dp))
+                    //Spacer(modifier = Modifier.height(2.dp))
                         Text(
                        text = "Delete",
                        color = MaterialTheme.colorScheme.error,

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.mastercoding.androidevalutionassignment2.data.remote.AuthRepository
+import io.mastercoding.androidevalutionassignment2.data.util.Util
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
@@ -14,8 +15,6 @@ class LoginViewModel(
     companion object {
         private const val ADMIN_EMAIL = "admin@admin.com"
         private const val ADMIN_PASSWORD = "Admin@123"
-        private const val PASSWORD_REGEX =
-            "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-z\\d@\$!%*?&]{9,}$"
     }
 
     private var isPasswordTouched = false
@@ -30,7 +29,7 @@ class LoginViewModel(
     val emailError: LiveData<String?> = _emailError
 
     private val _password = MutableLiveData("")
-    val password: LiveData<String> = _password
+//    val password: LiveData<String> = _password
 
     //Validation State
 
@@ -42,7 +41,7 @@ class LoginViewModel(
     val loginSuccess: LiveData<Boolean> = _loginSuccess
 
     private val _errorMessage = MutableLiveData<String?>()
-    val errorMessage: LiveData<String?> = _errorMessage
+
 
     //Input Handlers
     fun onEmailChanged(input: String) {
@@ -73,8 +72,7 @@ class LoginViewModel(
     }
 
     private fun validatePassword(password: String) {
-        val regex =
-            "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-z\\d@\$!%*?&]{8,}$"
+        val regex = Util.regex
 
         if (!isPasswordTouched) {
             _passwordError.value = null

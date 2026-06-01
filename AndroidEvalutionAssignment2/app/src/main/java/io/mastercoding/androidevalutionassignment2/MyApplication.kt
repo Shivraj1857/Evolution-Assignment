@@ -7,7 +7,6 @@ import io.mastercoding.androidevalutionassignment2.data.local.AppDatabase
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-
 class MyApplication : Application() {
 
     companion object {
@@ -22,8 +21,6 @@ class MyApplication : Application() {
             applicationContext,
             AppDatabase::class.java,
             "app_database"
-        )
-            .fallbackToDestructiveMigration()
-            .build()
+        ).build()
     }
 }

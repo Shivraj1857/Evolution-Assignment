@@ -15,6 +15,5 @@ import io.mastercoding.androidevalutionassignment2.data.local.entity.UserEntity
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
-
     abstract fun userDao(): UserDao
 }

@@ -49,9 +49,6 @@ android {
         compose=true
         viewBinding=true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.14"
-    }
 
 }
 
@@ -62,37 +59,25 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.runtime)
-    //implementation(libs.androidx.material3)
-    //implementation(libs.androidx.runtime)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
 
     //ViewModel, Live Data ,Ksp
-    val lifecycle_version = "2.10.0"
-    // ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
-    // LiveData
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:${lifecycle_version}")
-    // Annotation processor
-    ksp("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    ksp(libs.androidx.lifecycle.compiler)
 
 
 
     //Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
-    //implementation("com.google.dagger:hilt-android:2.50")
-
-
-
 
     //ROOM
-    val room_version = "2.8.4"
-    implementation("androidx.room:room-runtime:$room_version")
-    //kotlin symbol processing(KSP)
-    ksp("androidx.room:room-compiler:$room_version")
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
 
 
 
@@ -124,7 +109,6 @@ dependencies {
 
 
     //compose
-    //implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
@@ -137,8 +121,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
     //navigation
-    implementation(libs.androidx.compose.runtime)        // ✅ REQUIRED
-    //implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.compose.runtime)
     implementation("androidx.compose.material:material-icons-extended")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
     implementation(libs.androidx.lifecycle.viewmodel.compose)

@@ -1,6 +1,7 @@
 package io.mastercoding.androidevalutionassignment2.data.local.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -20,6 +21,7 @@ interface UserDao {
     fun getAllUsers(): Flow<List<UserEntity>>
 
     // Delete
+//    @Delete
     @Query("DELETE FROM users WHERE id = :userId")
     suspend fun deleteUserById(userId: Int)
 

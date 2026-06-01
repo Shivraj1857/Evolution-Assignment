@@ -10,13 +10,11 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
-import dagger.hilt.android.AndroidEntryPoint
 import io.mastercoding.androidevalutionassignment2.data.repository.AuthRepositoryImpl
 import io.mastercoding.androidevalutionassignment2.databinding.ActivityLoginBinding
 import io.mastercoding.androidevalutionassignment2.ui.dashboard.DashboardActivity
 import io.mastercoding.androidevalutionassignment2.ui.signup.SignupActivity
 
-@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
@@ -86,6 +84,18 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
+//  //  UI helpers
+//    private fun showPasswordError() {
+//        binding.tvPasswordError.visibility = View.VISIBLE
+//        setStrokeColor(binding.tilPassword, Color.RED)
+//    }
+//
+//    private fun clearPasswordError() {
+//        binding.tilPassword.error = null
+//        binding.tvPasswordError.visibility = View.GONE
+//        setStrokeColor(binding.tilPassword, Color.GRAY)
+//    }
 
     private fun setStrokeColor(
         layout: TextInputLayout,
